@@ -16,7 +16,7 @@ ddns.py 是基于 [DNSPod](http://www.dnspod.cn/docs/records.html#dns) 服务的
 安装 [git](https://git-scm.com/) 客户端，通过本命令获取 ddns.py
 
 <pre>
-git clone https://github.com/migege/dnspod.git dnspod
+git clone https://gitee.com/tdg/ddns.git ddns
 </pre>
 
 然后到 ddns 目录下新建 ```conf.json``` 文件，根据您的 DNSPod 设置，填入以下内容：
