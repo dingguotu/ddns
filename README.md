@@ -2,7 +2,7 @@
 
 ```
 @author tinko
-@version 0.0.3
+@version 0.0.4
 ```
 
 ddns.py 是基于 [DNSPod](http://www.dnspod.cn/docs/records.html#dns) 服务的动态 DNS 脚本，用于检测 IP 变化并更新至 DNSPod，支持多域名解析。支持 Linux 设备，包括树莓派（[Raspberry Pi](https://www.raspberrypi.org/)）。
