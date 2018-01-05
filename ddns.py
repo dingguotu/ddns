@@ -5,6 +5,9 @@ import socket
 import json
 import os
 
+LocalIP = None
+HostIP = None
+
 ID = None
 Token = None
 Domain = None
@@ -23,6 +26,8 @@ params = dict(
 def ddns(ip):
     import httplib 
     import urllib
+
+    print ("LocalIP is: %s, HostIP is: %s" % (LocalIP, HostIP))
     
     params['login_token'] = ("%s,%s" % (ID, Token))
     params['value'] = ip
@@ -61,14 +66,13 @@ def logger():
     
 def getip():
     sock = socket.create_connection(('ns1.dnspod.net', 6666), 20)
-    ip = sock.recv(16)
+    LocalIP = sock.recv(16)
     sock.close()
-    return ip
 
 
 def getHostIP(domain):
     ip = socket.gethostbyname_ex(domain)
-    return ip[2][0]
+    HostIP = ip[2][0]
 
     
 if __name__ == '__main__':
@@ -80,11 +84,10 @@ if __name__ == '__main__':
     SubDomains = conf['sub_domains']
     
     try:
-        ip = getip()
-        hostip = getHostIP(Domain)
-        print ip, hostip
-        if hostip != ip:
-            ddns(ip)
+        getip()
+        getHostIP(Domain)
+        if HostIP != LocalIP:
+            ddns(LocalIP)
     except Exception as e:
         print e
         pass
