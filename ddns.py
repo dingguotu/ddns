@@ -5,8 +5,8 @@ import socket
 import json
 import os
 
-LocalIP = None
-HostIP = None
+global LocalIP
+global HostIP
 
 ID = None
 Token = None
@@ -23,14 +23,14 @@ params = dict(
     value=None
 )
 
-def ddns(ip):
+def ddns():
     import httplib 
     import urllib
 
     print ("LocalIP is: %s, HostIP is: %s" % (LocalIP, HostIP))
     
     params['login_token'] = ("%s,%s" % (ID, Token))
-    params['value'] = ip
+    params['value'] = LocalIP
     
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/json"}
     conn = httplib.HTTPSConnection("dnsapi.cn")
@@ -45,8 +45,7 @@ def ddns(ip):
         # logger().info(response.status, response.reason)
         data = json.loads(response.read())
         if int(data['status']['code']) == 1:
-            current_ip = ip
-            print ("DDns Success for subdomain [%s], IP change to %s" % (item['name'], ip))
+            print ("DDns Success for subdomain [%s], IP change to %s" % (item['name'], LocalIP))
             continue
         else:
             print ("DDns Error for subdomain [%s]: %s" % (item['name'], data['status']['message']))
@@ -65,13 +64,15 @@ def logger():
 
     
 def getip():
+    global LocalIP
     sock = socket.create_connection(('ns1.dnspod.net', 6666), 20)
     LocalIP = sock.recv(16)
     sock.close()
 
 
-def getHostIP(domain):
-    ip = socket.gethostbyname_ex(domain)
+def getHostIP():
+    global HostIP
+    ip = socket.gethostbyname_ex(Domain)
     HostIP = ip[2][0]
 
     
@@ -85,9 +86,9 @@ if __name__ == '__main__':
     
     try:
         getip()
-        getHostIP(Domain)
+        getHostIP()
         if HostIP != LocalIP:
-            ddns(LocalIP)
+            ddns()
     except Exception as e:
         print e
         pass
