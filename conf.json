@@ -1,8 +1,0 @@
-{
-	"id": "43663",
-	"token": "43ff445b3b300a7fcfe0f79bbf933ef2",
-	"domains": [{
-		"name": "tinko.win",
-		"sub_domains": ["@", "*"]
-	}]
-}
