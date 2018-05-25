@@ -34,7 +34,11 @@ git clone https://gitee.com/tdg/ddns.git
 
 ---
 
+<<<<<<< HEAD
 接下来到DNSPod中创建API Token，具体步骤是：登录DNSPod -> 进入控制台 -> 用户中心 -> 安全设置 -> 开启API Token（已开启的点击查看） -> 创建API Token（**Token只会显示一次，以后将没办法查看已有的Token，请务必保管好自己的Token，如果不慎丢失，可以删除后重新创建，但是程序里也要及时修改，以免导致程序不能正常运行**）
+=======
+接下来到DNSPod中创建API Token，具体步骤是：登录DNSPod -> 进入控制台 -> 用户中心 -> 安全设置 -> 开启API Token（已开启的点击查看） -> 创建API Token（**`Token只会显示一次，以后将没办法查看已有的Token，请务必保管好自己的Token，如果不慎丢失，可以删除后重新创建，但是程序里也要及时修改，以免导致程序不能正常运行`**）
+>>>>>>> 02e2f7009c329aa023a17684962bfed7fe2b499f
 
 ---
 
