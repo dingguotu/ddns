@@ -32,7 +32,9 @@ ddns.py 是基于 [DNSPod](http://www.dnspod.cn/docs/records.html#dns) 服务的
 git clone https://gitee.com/tdg/ddns.git
 ```
 
-接下来到DNSPod中创建API Token，具体步骤是：登录DNSPod -> 进入控制台 -> 用户中心 -> 安全设置 -> 开启API Token（已开启的点击查看） -> 创建API Token（**`Token只会显示一次，以后将没办法查看已有的Token，请务必保管好自己的Token，如果不慎丢失，可以删除后重新创建，但是程序里也要及时修改，以免导致程序不能正常运行`**）
+---
+
+接下来到DNSPod中创建API Token，具体步骤是：登录DNSPod -> 进入控制台 -> 用户中心 -> 安全设置 -> 开启API Token（已开启的点击查看） -> 创建API Token（**Token只会显示一次，以后将没办法查看已有的Token，请务必保管好自己的Token，如果不慎丢失，可以删除后重新创建，但是程序里也要及时修改，以免导致程序不能正常运行**）
 
 ---
 
@@ -56,11 +58,13 @@ git clone https://gitee.com/tdg/ddns.git
 
 ---
 
-最后设置 crontab 定时任务，每隔30分钟运行一次，以便更新DNS记录：
+最后设置 crontab 定时任务，以便更新DNS记录：
 
 ```bash
 sudo crontab -e
 /30 * * * * python /home/pi/ddns/ddns.py
 ```
 
-本教程的定时任务是Linux版本，Windows版请自行学习[Windows 任务计划](https://jingyan.baidu.com/article/0964eca26a53b08285f536d2.html)，具体多久执行一次可以自行修改，本教程不做限定。
+本教程的定时任务是Linux版本，`/30` 表示每隔30分钟运行一次，可以自行修改，本教程不做限定。`/home/pi/ddns/ddns.py` 是绝对路径，请根据实际情况进行修改
+
+Windows版请自行学习[Windows 任务计划](https://jingyan.baidu.com/article/0964eca26a53b08285f536d2.html)
