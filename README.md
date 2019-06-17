@@ -38,6 +38,15 @@ git clone https://gitee.com/tdg/ddns.git
 
 ---
 
+如果域名是在阿里云或其他非腾讯云处购买的，还需要进入相对应的服务商控制台，修改域名的DNS地址为：
+
+```bash
+f1g1ns1.dnspod.net
+f1g1ns2.dnspod.net
+```
+
+---
+
 复制 `conf.sample.json` 文件，并重命名为 `conf.json`，根据您的DNSPod设置修改 `conf.json` 文件，填入以下内容：
 
 ```bash
