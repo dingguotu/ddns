@@ -3,38 +3,54 @@
 import socket 
 import json
 import os
+import dnspod
 
 global LocalIP
 global HostIP
 global Login_Token
-Domains = None
+global Domain_Id
+
+def init_domain(domain):
+    global Domain_Id
+
+    domain_exists = check_domain_exists(domain)
+    if domain_exists == False:
+        Domain_Id = dnspod.create_domain(Login_Token, domain['name'])
+
+
+def check_domain_exists(domain):
+    global Domain_Id
+
+    Domain_Id = dnspod.get_domain_id(Login_Token, domain['name'])
+    if Domain_Id == 0:
+        return False
+    else:
+        return True
+
 
 def ddns(domain):
-    import dnspod
+    global Domain_Id
 
-    domain_id = dnspod.get_domain_id(Login_Token, domain['name'])
-    if domain_id == 0:
-        domain_id = dnspod.create_domain(Login_Token, domain['name'])
-    
     for sub_domain in domain['sub_domains']:
-        record_id = dnspod.get_record_id(Login_Token, domain_id, sub_domain)
+        record_id = dnspod.get_record_id(Login_Token, Domain_Id, sub_domain)
         if record_id == 0:
-            dnspod.create_record_id(Login_Token, domain_id, sub_domain, LocalIP)
+            dnspod.create_record_id(Login_Token, Domain_Id, sub_domain, LocalIP)
         else:
-            dnspod.record_ddns(Login_Token, domain_id, record_id, sub_domain, LocalIP)
+            dnspod.record_ddns(Login_Token, Domain_Id, record_id, sub_domain, LocalIP)
 
     
-def getip():
+def get_ip():
     global LocalIP
     sock = socket.create_connection(('ns1.dnspod.net', 6666), 20)
     LocalIP = sock.recv(16)
     sock.close()
 
 
-def getHostIP(domain):
+def get_host_ip(domain):
     global HostIP
-    ip = socket.gethostbyname_ex(domain['name'])
-    HostIP = ip[2][0]
+    global Domain_Id
+
+    HostIP = dnspod.get_record_value(Login_Token, Domain_Id, domain['sub_domains'][0])
 
     
 if __name__ == '__main__':
@@ -45,9 +61,10 @@ if __name__ == '__main__':
     Domains = conf['domains']
     
     try:
-        getip()
+        get_ip()
         for domain in Domains:
-            getHostIP(domain)
+            init_domain(domain)
+            get_host_ip(domain)
             if HostIP != LocalIP:
                 print "Begin update [%s]." % domain['name']
                 ddns(domain)
