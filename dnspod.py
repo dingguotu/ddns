@@ -22,6 +22,7 @@ def get_domain_id(login_token, domain_name):
         for domain in domails:
             if domain['name'] == domain_name:
                 return domain['id']
+        return 0
     else:
         return 0
 
@@ -45,6 +46,30 @@ def create_domain(login_token, domain_name):
     conn.close()
 
 
+def get_record_value(login_token, domain_id, sub_domain):
+    conn = httplib.HTTPSConnection("dnsapi.cn")
+    params = dict(
+        login_token=login_token,
+        format="json",
+        domain_id = domain_id,
+        sub_domain = sub_domain
+    )
+    conn.request("POST", "/Record.List", urllib.urlencode(params), Headers)
+    response = conn.getresponse()
+    data = json.loads(response.read())
+
+    if int(data['status']['code']) == 1:
+        records = data['records']
+        for record in records:
+            if record['type'] == 'A' and record['name'] == sub_domain:
+                return record['value']
+        return "127.0.0.1"
+    else:
+        return "127.0.0.1"
+
+    conn.close()
+
+
 def get_record_id(login_token, domain_id, sub_domain):
     conn = httplib.HTTPSConnection("dnsapi.cn")
     params = dict(
@@ -62,6 +87,7 @@ def get_record_id(login_token, domain_id, sub_domain):
         for record in records:
             if record['type'] == 'A' and record['name'] == sub_domain:
                 return record['id']
+        return 0
     else:
         return 0
 
