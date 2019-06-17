@@ -29,7 +29,7 @@ ddns.py 是基于 [DNSPod](http://www.dnspod.cn/docs/records.html#dns) 服务的
 通过本命令获取 ddns.py
 
 ```bash
-git clone https://github.com/dingguotu/ddns.git
+git clone https://gitee.com/tdg/ddns.git
 ```
 
 ---
@@ -38,19 +38,22 @@ git clone https://github.com/dingguotu/ddns.git
 
 ---
 
-然后到 ddns 目录下新建 `conf.json` 文件，根据您的 DNSPod 设置，填入以下内容：
+复制 `conf.sample.json` 文件，并重命名为 `conf.json`，根据您的DNSPod设置修改 `conf.json` 文件，填入以下内容：
 
 ```bash
 {
     "id": <api_token_id>,
     "token": <api_token>,
-    "domains": [{
-        "name": <first_domain>,
-        "sub_domains": [<first_sub_domain_name>, <second_sub_domain_name>,...]
-    },{
-        "name": <second_domain>,
-        "sub_domains": [<first_sub_domain_name>, <second_sub_domain_name>,...]
-    }]
+    "domains": [
+        {
+            "name": <first_domain>,
+            "sub_domains": [<first_sub_domain_name>, <second_sub_domain_name>,...]
+        },
+        {
+            "name": <second_domain>,
+            "sub_domains": [<first_sub_domain_name>, <second_sub_domain_name>,...]
+        }
+    ]
 }
 ```
 
