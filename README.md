@@ -29,7 +29,7 @@ ddns.py 是基于 [DNSPod](http://www.dnspod.cn/docs/records.html#dns) 服务的
 通过本命令获取 ddns.py
 
 ```bash
-git clone https://gitee.com/tdg/ddns.git
+git clone https://github.com/dingguotu/ddns.git
 ```
 
 ---
