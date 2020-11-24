@@ -63,13 +63,13 @@ def get_host_ip(domain):
     
 if __name__ == '__main__':
     global Login_Token
+    
+    logger.setup_logging()
     conf = json.load(open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "conf.json"), "r"))
-
     Login_Token = "%s,%s" % (conf['id'], conf['token'])
     Domains = conf['domains']
     
     try:
-        logger.setup_logging()
         get_ip()
         for domain in Domains:
             init_domain(domain)
