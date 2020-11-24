@@ -2,8 +2,8 @@
 # -*- coding: UTF-8 -*-
 import httplib 
 import urllib
-import json
-import os
+import json, os, logging
+import logger
 
 Headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/json"}
 
@@ -110,8 +110,9 @@ def create_record_id(login_token, domain_id, sub_domain, localIP):
     data = json.loads(response.read())
 
     if int(data['status']['code']) == 1:
-        print ("Sub_domain [%s] create success" % sub_domain)
-
+        logging.info("Sub_domain [%s] create success" % sub_domain)
+    else:
+        logging.error("Sub_domain [%s] create failed" % sub_domain)
     conn.close()
 
 
@@ -132,8 +133,8 @@ def record_ddns(login_token, domain_id, record_id, sub_domain, localIP):
     data = json.loads(response.read())
 
     if int(data['status']['code']) == 1:
-        print ("DDns Success for subdomain [%s], IP change to %s" % (sub_domain, localIP))
+        logging.info("DDns Success for subdomain [%s], IP change to %s" % (sub_domain, localIP))
     else:
-        print ("DDns Error for subdomain [%s]: %s" % (sub_domain, data['status']['message']))
+        logging.error("DDns Error for subdomain [%s]: %s" % (sub_domain, data['status']['message']))
 
     conn.close()

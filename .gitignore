@@ -1,0 +1,9 @@
+#python
+*.pyc
+
+# Visual Studio/Visual Studio Code
+.vs/
+.vscode/
+
+#Logs
+*.log
